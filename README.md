@@ -1,6 +1,6 @@
 ## **Trabalho Final Curso de Programação Mobile - Unasp**
 
-O trabalho consitia em desenvolver uma aplicação utilizando o framework flutter que tivesse as seguintes caracteristicas:
+O trabalho consistia em desenvolver uma aplicação utilizando o framework Flutter que tivesse as seguintes características:
 
 1.  Consultar a api publica da camara dos deputados ([https://dadosabertos.camara.leg.br/swagger/api.html](https://dadosabertos.camara.leg.br/swagger/api.html));
 2.  Permitir Buscar os deputados por nome ou partido;
