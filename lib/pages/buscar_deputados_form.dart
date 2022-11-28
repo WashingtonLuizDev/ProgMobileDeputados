@@ -17,7 +17,7 @@ class _buscarDeputadosFormState extends State<buscarDeputadosForm>{
   final TextEditingController _NomeDeputado = TextEditingController();
   final TextEditingController _Partido = TextEditingController();
 
-  listarDeputados(String nome, String partido) async {
+  listarDeputados(String nome, String partido, BuildContext context) async {
     String link = 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome';
     List<Deputado> listaDeputados = [];
 
@@ -46,9 +46,16 @@ class _buscarDeputadosFormState extends State<buscarDeputadosForm>{
 
       listaDeputados.add(deputado);
     }
-    Navigator.push(context, MaterialPageRoute(
-      builder: (_) => listaDeputadosPage(listaDeputados: listaDeputados),
-    ));
+
+    if(listaDeputados.isEmpty){
+      showDialog(context: context, builder: (BuildContext _) {
+        return AlertDialog(title: Text("Atenção!"), content: Text("Não foi encontrado nenhum Deputado(a)!"), actions:[ElevatedButton(onPressed: () => Navigator.pop(_), child: Text("Ok"))]);
+      });
+    }else{
+      Navigator.push(context, MaterialPageRoute(
+        builder: (_) => listaDeputadosPage(listaDeputados: listaDeputados),
+      ));
+    }
   }
 
   @override
@@ -57,10 +64,11 @@ class _buscarDeputadosFormState extends State<buscarDeputadosForm>{
       appBar: AppBar(
         title: Text('Buscar Deputado(s)'),
       ),
-      body: Center(
-        child: Column(
+      body: ListView(
+        children: [Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Image.asset("../lib/assets/Hired-pana.png"),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child:
@@ -82,16 +90,30 @@ class _buscarDeputadosFormState extends State<buscarDeputadosForm>{
                   ),
             ),
             ),
-            TextButton(
-              onPressed: () {
-                setState((){
-                  listarDeputados(_NomeDeputado.text,_Partido.text);
+            // TextButton(
+            //   onPressed: () {
+            //     setState((){
+            //       listarDeputados(_NomeDeputado.text,_Partido.text);
+            //     });
+            //   },
+            //
+            //   child: Text("Buscar2"),
+            // )
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+              ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
+              onPressed: (){
+                  setState((){
+                  listarDeputados(_NomeDeputado.text,_Partido.text, context);
                 });
               },
-              child: Text("Buscar"),
-            )
+              child: const Text('Buscar'),
+            ),
+
           ],
-        ),
+        )],
       ),
       );
   }

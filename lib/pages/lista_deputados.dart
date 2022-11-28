@@ -27,7 +27,7 @@ class _listaDeputadosPageState extends State<listaDeputadosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Buscar Deputados(as)'),
+        title: Text('Listar Deputados(as)'),
       ),
       body: ListView.separated(
         itemBuilder: (BuildContext context, int id) {
